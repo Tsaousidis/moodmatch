@@ -45,3 +45,19 @@ Open `http://localhost:3000` in your browser.
 
 Copy `.env.example` to `.env.local` and fill in the required values as features
 are added.
+
+## Database
+
+Moodmatch uses Neon PostgreSQL with Drizzle ORM.
+
+Generate SQL migrations from the schema:
+
+```bash
+npm run db:generate
+```
+
+Run migrations against the configured Neon database:
+
+```bash
+npm run db:migrate
+```
