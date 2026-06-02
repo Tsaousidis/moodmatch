@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#f7f3ec] text-[#1f2428]">
@@ -13,6 +15,20 @@ export default function Home() {
             Moodmatch learns from every favorite, rating, rejection, and saved
             item to build a Taste DNA that improves with each recommendation.
           </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/auth/signup"
+              className="inline-flex h-12 items-center justify-center rounded-lg bg-[#1f2428] px-6 text-sm font-semibold text-white transition hover:bg-[#343b40]"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/auth/login"
+              className="inline-flex h-12 items-center justify-center rounded-lg border border-[#bfc9c2] px-6 text-sm font-semibold text-[#1f2428] transition hover:bg-white/70"
+            >
+              Log in
+            </Link>
+          </div>
         </section>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
