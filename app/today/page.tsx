@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 import { authOptions } from "@/lib/auth";
 
@@ -18,6 +19,12 @@ export default async function TodayPage() {
           Signed in as {session?.user?.email}. The recommendation loop starts
           after onboarding is connected.
         </p>
+        <Link
+          href="/onboarding/categories"
+          className="mt-8 inline-flex h-11 items-center justify-center rounded-lg bg-[#1f2428] px-5 text-sm font-semibold text-white transition hover:bg-[#343b40]"
+        >
+          Start onboarding
+        </Link>
       </div>
     </main>
   );
