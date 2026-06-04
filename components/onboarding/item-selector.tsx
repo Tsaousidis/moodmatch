@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
-type FavoriteOption = {
+export type OnboardingItemOption = {
   id: string;
   title: string;
   releaseYear: number | null;
@@ -12,13 +13,22 @@ type FavoriteOption = {
   type: string;
 };
 
-export function FavoritesSelector({
+export function ItemSelector({
   items,
   selectedItemIds,
+  apiPath,
+  saveLabel,
+  emptyError,
+  nextPath,
 }: {
-  items: FavoriteOption[];
+  items: OnboardingItemOption[];
   selectedItemIds: string[];
+  apiPath: string;
+  saveLabel: string;
+  emptyError: string;
+  nextPath?: string;
 }) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState(selectedItemIds);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
@@ -32,13 +42,12 @@ export function FavoritesSelector({
       .includes(query.trim().toLowerCase())
   );
 
-  const groupedItems = filteredItems.reduce<Record<string, FavoriteOption[]>>(
-    (groups, item) => {
-      groups[item.categoryName] = [...(groups[item.categoryName] ?? []), item];
-      return groups;
-    },
-    {}
-  );
+  const groupedItems = filteredItems.reduce<
+    Record<string, OnboardingItemOption[]>
+  >((groups, item) => {
+    groups[item.categoryName] = [...(groups[item.categoryName] ?? []), item];
+    return groups;
+  }, {});
 
   function toggleItem(itemId: string) {
     setStatus("idle");
@@ -49,10 +58,15 @@ export function FavoritesSelector({
     );
   }
 
-  async function saveFavorites() {
+  async function saveItems() {
+    if (selectedIds.length === 0) {
+      setStatus("error");
+      return;
+    }
+
     setStatus("saving");
 
-    const response = await fetch("/api/onboarding/favorites", {
+    const response = await fetch(apiPath, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ itemIds: selectedIds }),
@@ -60,6 +74,12 @@ export function FavoritesSelector({
 
     if (response.ok) {
       setStatus("saved");
+
+      if (nextPath) {
+        router.push(nextPath);
+        router.refresh();
+      }
+
       return;
     }
 
@@ -108,7 +128,7 @@ export function FavoritesSelector({
                     </span>
                     <span className="mt-2 block text-sm text-[#4f5f63]">
                       {item.releaseYear
-                        ? `${item.type.replace("_", " ")} · ${item.releaseYear}`
+                        ? `${item.type.replace("_", " ")} - ${item.releaseYear}`
                         : item.type.replace("_", " ")}
                     </span>
                     <span className="mt-4 block text-xs font-semibold uppercase tracking-[0.14em] text-[#6f7d72]">
@@ -125,17 +145,17 @@ export function FavoritesSelector({
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="button"
-          onClick={saveFavorites}
+          onClick={saveItems}
           disabled={selectedIds.length === 0 || status === "saving"}
           className="h-11 rounded-lg bg-[#1f2428] px-5 text-sm font-semibold text-white transition hover:bg-[#343b40] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {status === "saving" ? "Saving..." : "Save favorites"}
+          {status === "saving" ? "Saving..." : saveLabel}
         </button>
         <p className="text-sm text-[#4f5f63]">
           {status === "saved"
             ? "Saved."
             : status === "error"
-              ? "Could not save favorites."
+              ? emptyError
               : `${selectedIds.length} selected`}
         </p>
       </div>
