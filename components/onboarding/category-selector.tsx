@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type CategoryOption = {
   id: string;
@@ -17,6 +18,7 @@ export function CategorySelector({
   categories: CategoryOption[];
   selectedCategoryIds: string[];
 }) {
+  const router = useRouter();
   const [selectedIds, setSelectedIds] = useState(selectedCategoryIds);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
     "idle"
@@ -43,7 +45,14 @@ export function CategorySelector({
       body: JSON.stringify({ categoryIds: selectedIds }),
     });
 
-    setStatus(response.ok ? "saved" : "error");
+    if (response.ok) {
+      setStatus("saved");
+      router.push("/onboarding/favorites");
+      router.refresh();
+      return;
+    }
+
+    setStatus("error");
   }
 
   return (

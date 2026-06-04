@@ -1,0 +1,144 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+type FavoriteOption = {
+  id: string;
+  title: string;
+  releaseYear: number | null;
+  categoryId: string | null;
+  categoryName: string;
+  categorySlug: string;
+  type: string;
+};
+
+export function FavoritesSelector({
+  items,
+  selectedItemIds,
+}: {
+  items: FavoriteOption[];
+  selectedItemIds: string[];
+}) {
+  const [query, setQuery] = useState("");
+  const [selectedIds, setSelectedIds] = useState(selectedItemIds);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
+    "idle"
+  );
+
+  const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
+  const filteredItems = items.filter((item) =>
+    `${item.title} ${item.categoryName}`
+      .toLowerCase()
+      .includes(query.trim().toLowerCase())
+  );
+
+  const groupedItems = filteredItems.reduce<Record<string, FavoriteOption[]>>(
+    (groups, item) => {
+      groups[item.categoryName] = [...(groups[item.categoryName] ?? []), item];
+      return groups;
+    },
+    {}
+  );
+
+  function toggleItem(itemId: string) {
+    setStatus("idle");
+    setSelectedIds((currentIds) =>
+      currentIds.includes(itemId)
+        ? currentIds.filter((id) => id !== itemId)
+        : [...currentIds, itemId]
+    );
+  }
+
+  async function saveFavorites() {
+    setStatus("saving");
+
+    const response = await fetch("/api/onboarding/favorites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ itemIds: selectedIds }),
+    });
+
+    if (response.ok) {
+      setStatus("saved");
+      return;
+    }
+
+    setStatus("error");
+  }
+
+  return (
+    <div>
+      <div className="max-w-xl">
+        <label className="block">
+          <span className="text-sm font-medium text-[#354247]">
+            Search suggestions
+          </span>
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search movies, books, games..."
+            className="mt-2 h-11 w-full rounded-lg border border-[#cfc7b9] bg-white px-3 text-sm outline-none transition focus:border-[#3c6e71]"
+          />
+        </label>
+      </div>
+
+      <div className="mt-8 space-y-8">
+        {Object.entries(groupedItems).map(([categoryName, categoryItems]) => (
+          <section key={categoryName}>
+            <h2 className="text-xl font-semibold text-[#1f2428]">
+              {categoryName}
+            </h2>
+            <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {categoryItems.map((item) => {
+                const isSelected = selectedSet.has(item.id);
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => toggleItem(item.id)}
+                    className={`min-h-28 rounded-lg border bg-white/80 p-4 text-left shadow-sm transition ${
+                      isSelected
+                        ? "border-[#3c6e71] ring-2 ring-[#3c6e71]/25"
+                        : "border-[#ded6c7] hover:border-[#bfc9c2]"
+                    }`}
+                  >
+                    <span className="block text-base font-semibold text-[#1f2428]">
+                      {item.title}
+                    </span>
+                    <span className="mt-2 block text-sm text-[#4f5f63]">
+                      {item.releaseYear
+                        ? `${item.type.replace("_", " ")} · ${item.releaseYear}`
+                        : item.type.replace("_", " ")}
+                    </span>
+                    <span className="mt-4 block text-xs font-semibold uppercase tracking-[0.14em] text-[#6f7d72]">
+                      {isSelected ? "Selected" : "Tap to add"}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          type="button"
+          onClick={saveFavorites}
+          disabled={selectedIds.length === 0 || status === "saving"}
+          className="h-11 rounded-lg bg-[#1f2428] px-5 text-sm font-semibold text-white transition hover:bg-[#343b40] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {status === "saving" ? "Saving..." : "Save favorites"}
+        </button>
+        <p className="text-sm text-[#4f5f63]">
+          {status === "saved"
+            ? "Saved."
+            : status === "error"
+              ? "Could not save favorites."
+              : `${selectedIds.length} selected`}
+        </p>
+      </div>
+    </div>
+  );
+}
