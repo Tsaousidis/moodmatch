@@ -59,6 +59,7 @@ export default async function OnboardingAlreadyExperiencedPage() {
             apiPath="/api/onboarding/already-experienced"
             saveLabel="Save experienced items"
             emptyError="Could not save experienced items."
+            nextPath="/onboarding/tags"
           />
         </div>
       </div>
