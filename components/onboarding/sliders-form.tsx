@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type SliderCategory = {
   id: string;
@@ -33,6 +34,7 @@ export function SlidersForm({
   categories: SliderCategory[];
   values: SliderValues[];
 }) {
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
     "idle"
   );
@@ -62,7 +64,14 @@ export function SlidersForm({
       body: JSON.stringify({ rows }),
     });
 
-    setStatus(response.ok ? "saved" : "error");
+    if (response.ok) {
+      setStatus("saved");
+      router.push("/onboarding/taste-dna");
+      router.refresh();
+      return;
+    }
+
+    setStatus("error");
   }
 
   return (
