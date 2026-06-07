@@ -16,6 +16,7 @@ export const config = {
   matcher: [
     "/today/:path*",
     "/discover/:path*",
+    "/ratings/:path*",
     "/onboarding/:path*",
     "/profile/:path*",
   ],
