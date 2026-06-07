@@ -20,7 +20,13 @@ const options = [
   ["avoidSadEndings", "Avoid sad endings"],
 ] as const;
 
-export function ComfortForm({ values }: { values: ComfortValues }) {
+export function ComfortForm({
+  values,
+  nextPath = "/onboarding/sliders",
+}: {
+  values: ComfortValues;
+  nextPath?: string | null;
+}) {
   const router = useRouter();
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
     "idle"
@@ -51,7 +57,9 @@ export function ComfortForm({ values }: { values: ComfortValues }) {
 
     if (response.ok) {
       setStatus("saved");
-      router.push("/onboarding/sliders");
+      if (nextPath) {
+        router.push(nextPath);
+      }
       router.refresh();
       return;
     }

@@ -23,10 +23,11 @@ export async function POST(request: Request) {
     : [];
 
   if (itemIds.length === 0) {
-    return NextResponse.json(
-      { error: "Select at least one experienced item." },
-      { status: 400 }
-    );
+    await db
+      .delete(userAlreadyExperienced)
+      .where(eq(userAlreadyExperienced.userId, session.user.id));
+
+    return NextResponse.json({ itemIds: [] });
   }
 
   const validItems = await db

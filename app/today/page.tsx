@@ -76,10 +76,10 @@ export default async function TodayPage() {
               Ratings
             </Link>
             <Link
-              href="/onboarding/categories"
+              href="/profile"
               className="inline-flex h-10 items-center rounded-lg border border-[#cfc7b9] bg-white/70 px-4 text-sm font-semibold"
             >
-              Preferences
+              Profile
             </Link>
           </nav>
         </header>

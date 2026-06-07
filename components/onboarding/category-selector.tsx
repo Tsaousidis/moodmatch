@@ -14,9 +14,11 @@ type CategoryOption = {
 export function CategorySelector({
   categories,
   selectedCategoryIds,
+  nextPath = "/onboarding/favorites",
 }: {
   categories: CategoryOption[];
   selectedCategoryIds: string[];
+  nextPath?: string | null;
 }) {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState(selectedCategoryIds);
@@ -47,7 +49,9 @@ export function CategorySelector({
 
     if (response.ok) {
       setStatus("saved");
-      router.push("/onboarding/favorites");
+      if (nextPath) {
+        router.push(nextPath);
+      }
       router.refresh();
       return;
     }

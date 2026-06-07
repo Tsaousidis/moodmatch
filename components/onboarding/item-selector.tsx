@@ -20,6 +20,7 @@ export function ItemSelector({
   saveLabel,
   emptyError,
   nextPath,
+  allowEmpty = false,
 }: {
   items: OnboardingItemOption[];
   selectedItemIds: string[];
@@ -27,6 +28,7 @@ export function ItemSelector({
   saveLabel: string;
   emptyError: string;
   nextPath?: string;
+  allowEmpty?: boolean;
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -59,7 +61,7 @@ export function ItemSelector({
   }
 
   async function saveItems() {
-    if (selectedIds.length === 0) {
+    if (selectedIds.length === 0 && !allowEmpty) {
       setStatus("error");
       return;
     }
@@ -146,7 +148,7 @@ export function ItemSelector({
         <button
           type="button"
           onClick={saveItems}
-          disabled={selectedIds.length === 0 || status === "saving"}
+          disabled={(!allowEmpty && selectedIds.length === 0) || status === "saving"}
           className="h-11 rounded-lg bg-[#1f2428] px-5 text-sm font-semibold text-white transition hover:bg-[#343b40] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "saving" ? "Saving..." : saveLabel}
