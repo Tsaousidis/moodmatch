@@ -1,0 +1,35 @@
+import type { HomeRecommendation } from "@/lib/recommendations/home";
+
+export function RecommendationCard({
+  recommendation,
+}: {
+  recommendation: HomeRecommendation;
+}) {
+  return (
+    <article className="grid min-h-52 grid-cols-[5rem_1fr] gap-4 rounded-lg border border-[#ded6c7] bg-white/80 p-4 shadow-sm">
+      <div className="flex h-full min-h-44 items-end rounded-lg bg-[#315f63] p-3 text-white">
+        <span className="text-xs font-semibold uppercase tracking-[0.12em]">
+          {recommendation.categoryName}
+        </span>
+      </div>
+      <div className="flex min-w-0 flex-col">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6f7d72]">
+          {recommendation.type.replace("_", " ")}
+          {recommendation.releaseYear
+            ? ` - ${recommendation.releaseYear}`
+            : ""}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold leading-6 text-[#1f2428]">
+          {recommendation.title}
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-[#4f5f63]">
+          {recommendation.reason}
+        </p>
+        <div className="mt-auto flex gap-4 pt-4 text-xs font-semibold text-[#3c6e71]">
+          <span>{recommendation.matchScore}% match</span>
+          <span>{recommendation.confidenceScore}% confidence</span>
+        </div>
+      </div>
+    </article>
+  );
+}
