@@ -1,4 +1,5 @@
 import type { HomeRecommendation } from "@/lib/recommendations/home";
+import { RatingControl } from "@/components/ratings/rating-control";
 
 export function RecommendationCard({
   recommendation,
@@ -29,6 +30,7 @@ export function RecommendationCard({
           <span>{recommendation.matchScore}% match</span>
           <span>{recommendation.confidenceScore}% confidence</span>
         </div>
+        <RatingControl itemId={recommendation.id} />
       </div>
     </article>
   );

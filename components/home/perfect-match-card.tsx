@@ -1,4 +1,5 @@
 import type { HomeRecommendation } from "@/lib/recommendations/home";
+import { RatingControl } from "@/components/ratings/rating-control";
 
 export function PerfectMatchCard({
   recommendation,
@@ -31,6 +32,7 @@ export function PerfectMatchCard({
             {recommendation.confidenceScore}% Confidence
           </span>
         </div>
+        <RatingControl itemId={recommendation.id} variant="dark" />
       </div>
       <div className="flex min-h-56 items-end bg-[#3c6e71] p-6">
         <div>
