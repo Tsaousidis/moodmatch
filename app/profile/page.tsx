@@ -5,7 +5,9 @@ import { redirect } from "next/navigation";
 import { CategorySelector } from "@/components/onboarding/category-selector";
 import { ComfortForm } from "@/components/onboarding/comfort-form";
 import { ItemSelector } from "@/components/onboarding/item-selector";
+import { LevelProgress } from "@/components/progress/level-progress";
 import { authOptions } from "@/lib/auth";
+import { getUserProgress } from "@/lib/progress/xp";
 import { getProfilePreferences } from "@/lib/profile/preferences";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +19,10 @@ export default async function ProfilePage() {
     redirect("/auth/login?callbackUrl=/profile");
   }
 
-  const preferences = await getProfilePreferences(session.user.id);
+  const [preferences, progress] = await Promise.all([
+    getProfilePreferences(session.user.id),
+    getUserProgress(session.user.id),
+  ]);
 
   return (
     <main className="min-h-screen bg-[#f7f3ec] px-6 py-12 text-[#1f2428]">
@@ -41,6 +46,10 @@ export default async function ProfilePage() {
             Back to Today
           </Link>
         </header>
+
+        <div className="mt-6 max-w-xl">
+          <LevelProgress progress={progress} />
+        </div>
 
         <nav className="mt-6 flex flex-wrap gap-2">
           <a

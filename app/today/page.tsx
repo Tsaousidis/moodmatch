@@ -4,7 +4,9 @@ import { redirect } from "next/navigation";
 
 import { PerfectMatchCard } from "@/components/home/perfect-match-card";
 import { RecommendationCard } from "@/components/home/recommendation-card";
+import { LevelProgress } from "@/components/progress/level-progress";
 import { authOptions } from "@/lib/auth";
+import { getUserProgress } from "@/lib/progress/xp";
 import { getHomeRecommendations } from "@/lib/recommendations/home";
 
 export default async function TodayPage() {
@@ -14,7 +16,10 @@ export default async function TodayPage() {
     redirect("/auth/login?callbackUrl=/today");
   }
 
-  const home = await getHomeRecommendations(session.user.id);
+  const [home, progress] = await Promise.all([
+    getHomeRecommendations(session.user.id),
+    getUserProgress(session.user.id),
+  ]);
 
   if (!home.isOnboarded) {
     return (
@@ -83,6 +88,10 @@ export default async function TodayPage() {
             </Link>
           </nav>
         </header>
+
+        <div className="mt-6 max-w-md">
+          <LevelProgress progress={progress} compact />
+        </div>
 
         <div className="mt-8">
           {home.perfectMatch ? (

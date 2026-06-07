@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 
 import { hashPassword } from "@/lib/auth/password";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { users, xpLog } from "@/lib/db/schema";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as {
@@ -54,6 +54,12 @@ export async function POST(request: Request) {
       email: users.email,
       name: users.name,
     });
+
+  await db.insert(xpLog).values({
+    userId: createdUser.id,
+    action: "signup",
+    points: 25,
+  });
 
   return NextResponse.json({ user: createdUser }, { status: 201 });
 }
