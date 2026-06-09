@@ -18,6 +18,7 @@ export const config = {
     "/discover/:path*",
     "/ratings/:path*",
     "/quests/:path*",
+    "/taste-dna/:path*",
     "/onboarding/:path*",
     "/profile/:path*",
   ],

@@ -69,7 +69,7 @@ export default async function TodayPage() {
               Discover
             </Link>
             <Link
-              href="/onboarding/taste-dna"
+              href="/taste-dna"
               className="inline-flex h-10 items-center rounded-lg border border-[#cfc7b9] bg-white/70 px-4 text-sm font-semibold"
             >
               Taste DNA
