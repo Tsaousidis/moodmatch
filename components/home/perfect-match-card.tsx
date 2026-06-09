@@ -1,5 +1,6 @@
 import type { HomeRecommendation } from "@/lib/recommendations/home";
 import { RatingControl } from "@/components/ratings/rating-control";
+import { SaveButton } from "@/components/saved-items/save-button";
 
 export function PerfectMatchCard({
   recommendation,
@@ -31,6 +32,13 @@ export function PerfectMatchCard({
           <span className="rounded-lg border border-white/30 px-4 py-2 text-sm font-semibold">
             {recommendation.confidenceScore}% Confidence
           </span>
+        </div>
+        <div className="mt-4">
+          <SaveButton
+            itemId={recommendation.id}
+            initialSaved={recommendation.isSaved}
+            variant="dark"
+          />
         </div>
         <RatingControl itemId={recommendation.id} variant="dark" />
       </div>

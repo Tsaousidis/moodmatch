@@ -1,5 +1,6 @@
 import type { HomeRecommendation } from "@/lib/recommendations/home";
 import { RatingControl } from "@/components/ratings/rating-control";
+import { SaveButton } from "@/components/saved-items/save-button";
 
 export function RecommendationCard({
   recommendation,
@@ -29,6 +30,12 @@ export function RecommendationCard({
         <div className="mt-auto flex gap-4 pt-4 text-xs font-semibold text-[#3c6e71]">
           <span>{recommendation.matchScore}% match</span>
           <span>{recommendation.confidenceScore}% confidence</span>
+        </div>
+        <div className="mt-3">
+          <SaveButton
+            itemId={recommendation.id}
+            initialSaved={recommendation.isSaved}
+          />
         </div>
         <RatingControl itemId={recommendation.id} />
       </div>

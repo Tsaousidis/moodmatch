@@ -10,6 +10,7 @@ import {
 import { ensurePopularItemsForCategoryIds } from "@/lib/items/popular";
 import { getLatestTasteDna } from "@/lib/onboarding/taste-dna";
 import type { HomeRecommendation } from "@/lib/recommendations/home";
+import { getSavedItemIds } from "@/lib/saved-items/service";
 
 export type DiscoverFilters = {
   vibe: string;
@@ -45,7 +46,7 @@ export async function getDiscoverRecommendations(
     ? selectedCategories.filter((category) => category.id === filters.categoryId)
     : selectedCategories;
   const categoryIds = activeCategories.map((category) => category.id);
-  const [catalog, favoriteRows, experiencedRows, latestTasteDna] =
+  const [catalog, favoriteRows, experiencedRows, latestTasteDna, savedItemIds] =
     await Promise.all([
       ensurePopularItemsForCategoryIds(categoryIds),
       db
@@ -57,6 +58,7 @@ export async function getDiscoverRecommendations(
         .from(userAlreadyExperienced)
         .where(eq(userAlreadyExperienced.userId, userId)),
       getLatestTasteDna(userId),
+      getSavedItemIds(userId),
     ]);
 
   const excludedIds = new Set([
@@ -91,6 +93,7 @@ export async function getDiscoverRecommendations(
         : anchors.length > 0
           ? `Connects with ${anchors.slice(0, 2).join(" and ")} while staying ${describeSliderBalance(filters)}.`
           : `A ${describeSliderBalance(filters)} ${item.categoryName.toLowerCase()} pick for this search.`,
+      isSaved: savedItemIds.has(item.id),
     }));
 
   return {

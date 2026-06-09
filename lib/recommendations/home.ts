@@ -9,6 +9,7 @@ import {
 } from "@/lib/db/schema";
 import { ensurePopularItemsForCategoryIds } from "@/lib/items/popular";
 import { getLatestTasteDna } from "@/lib/onboarding/taste-dna";
+import { getSavedItemIds } from "@/lib/saved-items/service";
 
 export type HomeRecommendation = {
   id: string;
@@ -20,6 +21,7 @@ export type HomeRecommendation = {
   matchScore: number;
   confidenceScore: number;
   reason: string;
+  isSaved: boolean;
 };
 
 export async function getHomeRecommendations(userId: string) {
@@ -42,7 +44,7 @@ export async function getHomeRecommendations(userId: string) {
     };
   }
 
-  const [catalog, favoriteRows, experiencedRows, latestTasteDna] =
+  const [catalog, favoriteRows, experiencedRows, latestTasteDna, savedItemIds] =
     await Promise.all([
       ensurePopularItemsForCategoryIds(
         selectedCategories.map((category) => category.id)
@@ -56,6 +58,7 @@ export async function getHomeRecommendations(userId: string) {
         .from(userAlreadyExperienced)
         .where(eq(userAlreadyExperienced.userId, userId)),
       getLatestTasteDna(userId),
+      getSavedItemIds(userId),
     ]);
 
   const excludedIds = new Set([
@@ -86,6 +89,7 @@ export async function getHomeRecommendations(userId: string) {
     matchScore: Math.max(76, 94 - index * 3),
     confidenceScore: latestTasteDna ? Math.max(64, 86 - index * 2) : 58,
     reason: buildReason(item.categoryName, latestTasteDna?.traits),
+    isSaved: savedItemIds.has(item.id),
   }));
 
   return {
