@@ -36,12 +36,20 @@ export default async function TasteDnaPage() {
             </h1>
             <p className="mt-3 max-w-2xl text-[#4f5f63]">{dna.summary}</p>
           </div>
-          <Link
-            href="/today"
-            className="inline-flex h-10 items-center rounded-lg border border-[#cfc7b9] bg-white/70 px-4 text-sm font-semibold"
-          >
-            Back to Today
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/explain-taste"
+              className="inline-flex h-10 items-center rounded-lg bg-[#1f2428] px-4 text-sm font-semibold text-white"
+            >
+              Explain My Taste
+            </Link>
+            <Link
+              href="/today"
+              className="inline-flex h-10 items-center rounded-lg border border-[#cfc7b9] bg-white/70 px-4 text-sm font-semibold"
+            >
+              Back to Today
+            </Link>
+          </div>
         </header>
 
         <section className="mt-8 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
