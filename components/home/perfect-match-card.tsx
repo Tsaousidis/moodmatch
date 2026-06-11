@@ -1,6 +1,7 @@
 import type { HomeRecommendation } from "@/lib/recommendations/home";
 import { RatingControl } from "@/components/ratings/rating-control";
 import { SaveButton } from "@/components/saved-items/save-button";
+import { ExternalMetadataSummary } from "@/components/home/external-metadata";
 
 export function PerfectMatchCard({
   recommendation,
@@ -23,8 +24,12 @@ export function PerfectMatchCard({
             : ""}
         </p>
         <p className="mt-6 max-w-2xl text-base leading-7 text-[#dce4e0]">
-          {recommendation.reason}
+          {recommendation.description ?? recommendation.reason}
         </p>
+        <ExternalMetadataSummary
+          metadata={recommendation.metadata ?? {}}
+          variant="dark"
+        />
         <div className="mt-8 flex flex-wrap gap-3">
           <span className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#1f2428]">
             {recommendation.matchScore}% Match Score
@@ -42,7 +47,14 @@ export function PerfectMatchCard({
         </div>
         <RatingControl itemId={recommendation.id} variant="dark" />
       </div>
-      <div className="flex min-h-56 items-end bg-[#3c6e71] p-6">
+      <div
+        className="flex min-h-56 items-end bg-[#3c6e71] bg-cover bg-center p-6"
+        style={
+          recommendation.imageUrl
+            ? { backgroundImage: `linear-gradient(transparent, rgba(0,0,0,.8)), url("${recommendation.imageUrl}")` }
+            : undefined
+        }
+      >
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#cce0d9]">
             Today&apos;s lane

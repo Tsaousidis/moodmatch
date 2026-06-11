@@ -3,6 +3,7 @@ import { and, asc, eq, inArray } from "drizzle-orm";
 import { ensureDefaultCategories } from "@/lib/categories/defaults";
 import { db } from "@/lib/db";
 import { categories, items } from "@/lib/db/schema";
+import { enrichItems } from "@/lib/external/enrich-item";
 
 const popularItemsByCategorySlug = {
   movies: [
@@ -91,6 +92,28 @@ export async function ensurePopularItemsForCategoryIds(categoryIds: string[]) {
     }
   }
 
+  const catalog = await db
+    .select({
+      id: items.id,
+      title: items.title,
+      releaseYear: items.releaseYear,
+      categoryId: items.categoryId,
+      categoryName: categories.name,
+      categorySlug: categories.slug,
+      type: items.type,
+      description: items.description,
+      imageUrl: items.imageUrl,
+      metadata: items.metadata,
+    })
+    .from(items)
+    .innerJoin(categories, eq(items.categoryId, categories.id))
+    .where(
+      and(inArray(items.categoryId, categoryIds), eq(items.externalSource, "seed"))
+    )
+    .orderBy(asc(categories.name), asc(items.title));
+
+  await enrichItems(catalog);
+
   return db
     .select({
       id: items.id,
@@ -100,6 +123,9 @@ export async function ensurePopularItemsForCategoryIds(categoryIds: string[]) {
       categoryName: categories.name,
       categorySlug: categories.slug,
       type: items.type,
+      description: items.description,
+      imageUrl: items.imageUrl,
+      metadata: items.metadata,
     })
     .from(items)
     .innerJoin(categories, eq(items.categoryId, categories.id))

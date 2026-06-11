@@ -16,6 +16,7 @@ profile and uses it to recommend one strong Perfect Match plus supporting picks.
 - Drizzle ORM
 - NextAuth.js
 - Azure AI
+- TMDB, Google Books, and BoardGameGeek metadata
 - Render
 
 ## Getting Started

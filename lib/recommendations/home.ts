@@ -22,6 +22,9 @@ export type HomeRecommendation = {
   confidenceScore: number;
   reason: string;
   isSaved: boolean;
+  description: string | null;
+  imageUrl: string | null;
+  metadata: Record<string, unknown> | null;
 };
 
 export async function getHomeRecommendations(userId: string) {
