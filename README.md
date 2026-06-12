@@ -62,3 +62,36 @@ Run migrations against the configured Neon database:
 ```bash
 npm run db:migrate
 ```
+
+## Deploy to Render
+
+The repository includes a `render.yaml` Blueprint for a Node web service in
+Render's Frankfurt region.
+
+1. In Render, create a new Blueprint and connect this GitHub repository.
+2. Provide the secret values requested from `render.yaml`.
+3. Set both `NEXTAUTH_URL` and `NEXT_PUBLIC_APP_URL` to the public Render URL,
+   for example `https://moodmatch.onrender.com`.
+4. Deploy the Blueprint.
+
+Required production secrets:
+
+- `DATABASE_URL`
+- `AZURE_AI_ENDPOINT`
+- `AZURE_AI_API_KEY`
+- `AZURE_AI_DEPLOYMENT`
+- `TMDB_API_KEY`
+- `GOOGLE_BOOKS_API_KEY`
+
+Optional production secret:
+
+- `BOARDGAMEGEEK_API_TOKEN` can be added later from the Render dashboard.
+
+Render generates `NEXTAUTH_SECRET` automatically. The service health check is
+available at `/api/health`.
+
+Before deploying a release that includes a new database migration, run:
+
+```bash
+npm run db:migrate
+```
