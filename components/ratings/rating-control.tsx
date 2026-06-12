@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Star } from "lucide-react";
 
 const positiveTraits = ["Story", "Characters", "Atmosphere", "Pacing"];
 const negativeTraits = ["Too slow", "Too intense", "Predictable", "Not my mood"];
@@ -69,7 +70,7 @@ export function RatingControl({
               setRating(value);
               void submitRating(value);
             }}
-            className={`h-8 w-8 text-xl leading-none transition ${
+            className={`flex h-8 w-8 items-center justify-center transition ${
               value <= rating
                 ? "text-[#d69e2e]"
                 : isDark
@@ -77,7 +78,10 @@ export function RatingControl({
                   : "text-[#cfc7b9] hover:text-[#9d8f77]"
             }`}
           >
-            ★
+            <Star
+              size={18}
+              fill={value <= rating ? "currentColor" : "none"}
+            />
           </button>
         ))}
       </div>

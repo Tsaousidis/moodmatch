@@ -67,13 +67,13 @@ export function AuthForm({ mode }: { mode: AuthFormMode }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md rounded-lg border border-[#ded6c7] bg-white/75 p-6 shadow-sm"
+      className="editorial-shadow w-full max-w-md rounded-xl border border-outline-variant bg-surface-container-lowest p-7"
     >
       <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#3c6e71]">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-secondary">
           Moodmatch
         </p>
-        <h1 className="mt-3 text-3xl font-semibold text-[#1f2428]">
+        <h1 className="mt-3 font-display text-4xl font-semibold text-primary">
           {isSignup ? "Create your account" : "Log in"}
         </h1>
       </div>
@@ -81,36 +81,36 @@ export function AuthForm({ mode }: { mode: AuthFormMode }) {
       <div className="mt-6 space-y-4">
         {isSignup ? (
           <label className="block">
-            <span className="text-sm font-medium text-[#354247]">Name</span>
+            <span className="text-sm font-semibold text-on-surface-variant">Name</span>
             <input
               name="name"
               type="text"
               autoComplete="name"
-              className="mt-2 h-11 w-full rounded-lg border border-[#cfc7b9] bg-white px-3 text-sm outline-none transition focus:border-[#3c6e71]"
+              className="mt-2 h-12 w-full rounded-xl border border-outline-variant bg-surface px-3 text-sm transition focus:border-secondary"
             />
           </label>
         ) : null}
 
         <label className="block">
-          <span className="text-sm font-medium text-[#354247]">Email</span>
+          <span className="text-sm font-semibold text-on-surface-variant">Email</span>
           <input
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="mt-2 h-11 w-full rounded-lg border border-[#cfc7b9] bg-white px-3 text-sm outline-none transition focus:border-[#3c6e71]"
+            className="mt-2 h-12 w-full rounded-xl border border-outline-variant bg-surface px-3 text-sm transition focus:border-secondary"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-[#354247]">Password</span>
+          <span className="text-sm font-semibold text-on-surface-variant">Password</span>
           <input
             name="password"
             type="password"
             autoComplete={isSignup ? "new-password" : "current-password"}
             minLength={8}
             required
-            className="mt-2 h-11 w-full rounded-lg border border-[#cfc7b9] bg-white px-3 text-sm outline-none transition focus:border-[#3c6e71]"
+            className="mt-2 h-12 w-full rounded-xl border border-outline-variant bg-surface px-3 text-sm transition focus:border-secondary"
           />
         </label>
       </div>
@@ -124,7 +124,7 @@ export function AuthForm({ mode }: { mode: AuthFormMode }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-6 h-11 w-full rounded-lg bg-[#1f2428] px-4 text-sm font-semibold text-white transition hover:bg-[#343b40] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 h-12 w-full rounded-xl bg-primary px-4 text-sm font-semibold text-on-primary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting
           ? "Working..."

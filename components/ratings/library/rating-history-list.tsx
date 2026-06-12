@@ -18,14 +18,14 @@ export function RatingHistoryList({
 }) {
   if (history.length === 0) {
     return (
-      <div className="rounded-lg border border-[#ded6c7] bg-white/80 p-6 text-[#4f5f63]">
+      <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-6 text-on-surface-variant">
         Your ratings will appear here after you rate a recommendation.
       </div>
     );
   }
 
   return (
-    <div className="divide-y divide-[#ded6c7] rounded-lg border border-[#ded6c7] bg-white/80 shadow-sm">
+    <div className="editorial-shadow divide-y divide-outline-variant overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
       {history.map((entry) => {
         const traits = [
           ...(entry.likedTraits ?? []),
@@ -38,11 +38,11 @@ export function RatingHistoryList({
             className="grid gap-4 p-5 md:grid-cols-[minmax(0,1fr)_8rem_10rem] md:items-center"
           >
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6f7d72]">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
                 {entry.categoryName ?? entry.type.replace("_", " ")}
                 {entry.releaseYear ? ` - ${entry.releaseYear}` : ""}
               </p>
-              <h3 className="mt-2 truncate text-lg font-semibold text-[#1f2428]">
+              <h3 className="mt-2 truncate text-xl font-semibold text-primary">
                 {entry.title}
               </h3>
               {traits.length > 0 ? (
@@ -50,7 +50,7 @@ export function RatingHistoryList({
                   {traits.map((trait) => (
                     <span
                       key={trait}
-                      className="rounded-lg bg-[#eef2ed] px-2 py-1 text-xs font-medium text-[#4f5f63]"
+                      className="rounded-lg bg-surface-container px-2 py-1 text-xs font-medium text-on-surface-variant"
                     >
                       {trait}
                     </span>

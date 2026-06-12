@@ -1,3 +1,5 @@
+import { Sparkles } from "lucide-react";
+
 type UserProgress = {
   totalXp: number;
   level: number;
@@ -16,30 +18,33 @@ export function LevelProgress({
 }) {
   return (
     <section
-      className={`rounded-lg border border-[#c8d3cc] bg-[#eaf0eb] ${
+      className={`editorial-shadow rounded-xl border border-outline-variant bg-surface-container-low ${
         compact ? "p-4" : "p-5"
       }`}
     >
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#3c6e71]">
-            Level {progress.level}
-          </p>
-          <h2 className={`${compact ? "mt-1 text-lg" : "mt-2 text-xl"} font-semibold`}>
-            {progress.title}
-          </h2>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-tertiary-fixed">
+            <Sparkles size={17} />
+          </span>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
+              Level {progress.level}
+            </p>
+            <h2 className="mt-1 text-lg font-semibold text-primary">
+              {progress.title}
+            </h2>
+          </div>
         </div>
-        <p className="text-sm font-semibold text-[#3c6e71]">
-          {progress.totalXp} XP
-        </p>
+        <p className="text-sm font-bold text-primary">{progress.totalXp} XP</p>
       </div>
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-white">
+      <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface-container-highest">
         <div
-          className="h-full rounded-full bg-[#3c6e71]"
+          className="h-full rounded-full bg-secondary-container"
           style={{ width: `${progress.progressPercent}%` }}
         />
       </div>
-      <p className="mt-2 text-xs text-[#4f5f63]">
+      <p className="mt-2 text-xs text-on-surface-variant">
         {progress.xpIntoLevel} / {progress.xpForNextLevel} XP to next level
       </p>
     </section>

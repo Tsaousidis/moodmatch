@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Sparkles, Trophy } from "lucide-react";
 
 type QuestItem = {
   userQuestId: string;
@@ -41,7 +42,8 @@ export function QuestList({ quests }: { quests: QuestItem[] }) {
   return (
     <div>
       {reward ? (
-        <div className="mb-5 rounded-lg border border-[#9ab7aa] bg-[#eaf0eb] p-4 text-sm font-semibold text-[#315f63]">
+        <div className="mb-5 flex items-center gap-3 rounded-xl border border-outline-variant bg-secondary-fixed p-4 text-sm font-semibold text-on-secondary-fixed">
+          <Sparkles size={18} />
           Quest claimed. +{reward} XP added.
         </div>
       ) : null}
@@ -55,25 +57,26 @@ export function QuestList({ quests }: { quests: QuestItem[] }) {
           return (
             <article
               key={quest.userQuestId}
-              className="rounded-lg border border-[#ded6c7] bg-white/80 p-5 shadow-sm"
+              className="editorial-shadow rounded-xl border border-outline-variant bg-surface-container-lowest p-5"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6f7d72]">
+                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
+                    <Trophy size={14} />
                     {quest.categoryName ?? "Taste Quest"}
                   </p>
                   <h2 className="mt-2 text-xl font-semibold">{quest.title}</h2>
                 </div>
-                <span className="rounded-lg bg-[#eaf0eb] px-3 py-1 text-xs font-semibold text-[#315f63]">
+                <span className="rounded-lg bg-secondary-fixed px-3 py-1 text-xs font-semibold text-on-secondary-fixed">
                   +{quest.xpReward} XP
                 </span>
               </div>
               <p className="mt-3 text-sm leading-6 text-[#4f5f63]">
                 {quest.description}
               </p>
-              <div className="mt-5 h-2 overflow-hidden rounded-full bg-[#ece6dc]">
+              <div className="mt-5 h-2 overflow-hidden rounded-full bg-surface-container-highest">
                 <div
-                  className="h-full rounded-full bg-[#3c6e71]"
+                  className="h-full rounded-full bg-secondary-container"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>

@@ -1,18 +1,276 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f3ec;
-  --foreground: #1f2428;
+  --background: #faf9f5;
+  --foreground: #1b1c1a;
+  --surface: #faf9f5;
+  --surface-bright: #faf9f5;
+  --surface-lowest: #ffffff;
+  --surface-low: #f4f4f0;
+  --surface-container: #efeeea;
+  --surface-high: #e9e8e4;
+  --surface-highest: #e3e2df;
+  --primary: #142527;
+  --primary-container: #2a3b3d;
+  --on-primary: #ffffff;
+  --on-primary-container: #b7cacc;
+  --secondary: #904d00;
+  --secondary-container: #fe932c;
+  --secondary-fixed: #ffdcc3;
+  --on-secondary-fixed: #2f1500;
+  --tertiary: #00403a;
+  --tertiary-fixed: #89f5e7;
+  --on-surface-variant: #424848;
+  --outline: #727879;
+  --outline-variant: #c2c7c8;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-lowest);
+  --color-surface-container-low: var(--surface-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-high);
+  --color-surface-container-highest: var(--surface-highest);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-secondary-fixed: var(--secondary-fixed);
+  --color-on-secondary-fixed: var(--on-secondary-fixed);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-fixed: var(--tertiary-fixed);
+  --color-on-surface: var(--foreground);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --font-sans: var(--font-hanken-grotesk);
+  --font-display: var(--font-newsreader);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-hanken-grotesk), sans-serif;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-newsreader), serif;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--secondary-container);
+}
+
+::selection {
+  background: var(--secondary-container);
+  color: var(--on-secondary-fixed);
+}
+
+.editorial-shadow {
+  box-shadow: 0 4px 20px -4px rgb(20 37 39 / 8%);
+}
+
+.app-shell main {
+  background: var(--surface) !important;
+  color: var(--foreground) !important;
+  padding: 32px 24px !important;
+}
+
+.app-shell main > div {
+  max-width: 1200px;
+}
+
+.app-shell h1 {
+  color: var(--primary);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.app-shell h2,
+.app-shell h3 {
+  color: var(--primary);
+}
+
+.app-shell [class*="bg-[#f7f3ec]"] {
+  background-color: var(--surface) !important;
+}
+
+.app-shell [class*="bg-white/"],
+.app-shell [class*="bg-white"] {
+  background-color: var(--surface-lowest) !important;
+}
+
+.app-shell [class*="bg-[#1f2428]"] {
+  background-color: var(--primary) !important;
+}
+
+.app-shell [class*="bg-[#eaf0eb]"],
+.app-shell [class*="bg-[#e6eee9]"],
+.app-shell [class*="bg-[#eef2ed]"] {
+  background-color: var(--surface-container-low) !important;
+}
+
+.app-shell [class*="bg-[#3c6e71]"],
+.onboarding-shell [class*="bg-[#3c6e71]"] {
+  background-color: var(--secondary-container) !important;
+  color: var(--on-secondary-fixed) !important;
+}
+
+.app-shell [class*="border-[#ded6c7]"],
+.app-shell [class*="border-[#cfc7b9]"],
+.app-shell [class*="border-[#c8d3cc]"],
+.app-shell [class*="border-[#d8d0c2]"],
+.app-shell [class*="border-[#bfc9c2]"] {
+  border-color: var(--outline-variant) !important;
+}
+
+.app-shell [class*="border-[#3c6e71]"],
+.onboarding-shell [class*="border-[#3c6e71]"] {
+  border-color: var(--secondary-container) !important;
+}
+
+.app-shell [class*="text-[#1f2428]"] {
+  color: var(--primary) !important;
+}
+
+.app-shell [class*="text-[#4f5f63]"],
+.app-shell [class*="text-[#657074]"],
+.app-shell [class*="text-[#6f7d72]"],
+.app-shell [class*="text-[#788486]"] {
+  color: var(--on-surface-variant) !important;
+}
+
+.app-shell [class*="text-[#3c6e71]"],
+.app-shell [class*="text-[#315d60]"],
+.app-shell [class*="text-[#315f63]"] {
+  color: var(--secondary) !important;
+}
+
+.app-shell [class*="rounded-lg"] {
+  border-radius: 8px !important;
+}
+
+.app-shell input,
+.app-shell textarea,
+.app-shell select,
+.onboarding-shell input,
+.onboarding-shell textarea,
+.onboarding-shell select {
+  border-color: var(--outline-variant) !important;
+  background-color: var(--surface-lowest);
+  accent-color: var(--secondary-container);
+}
+
+.app-shell input:focus,
+.app-shell textarea:focus,
+.app-shell select:focus,
+.onboarding-shell input:focus,
+.onboarding-shell textarea:focus,
+.onboarding-shell select:focus {
+  border-color: var(--secondary) !important;
+}
+
+.app-shell [class*="ring-[#3c6e71]"],
+.onboarding-shell [class*="ring-[#3c6e71]"] {
+  --tw-ring-color: rgb(254 147 44 / 30%) !important;
+}
+
+.app-shell article[class*="border"],
+.app-shell section[class*="border"][class*="bg-"],
+.app-shell div[class*="border"][class*="bg-"] {
+  box-shadow: 0 4px 20px -4px rgb(20 37 39 / 8%);
+}
+
+.app-shell main > div > header a[href="/today"],
+.app-shell main > div > header nav {
+  display: none;
+}
+
+.onboarding-shell main {
+  min-height: auto !important;
+  background: var(--surface) !important;
+  color: var(--foreground) !important;
+  padding: 40px 24px !important;
+}
+
+.onboarding-shell main > div {
+  max-width: 960px;
+}
+
+.onboarding-shell h1 {
+  font-family: var(--font-newsreader), serif;
+  color: var(--primary);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.onboarding-shell [class*="bg-[#f7f3ec]"] {
+  background-color: var(--surface) !important;
+}
+
+.onboarding-shell [class*="bg-white"] {
+  background-color: var(--surface-lowest) !important;
+}
+
+.onboarding-shell [class*="border-[#ded6c7]"],
+.onboarding-shell [class*="border-[#cfc7b9]"] {
+  border-color: var(--outline-variant) !important;
+}
+
+.onboarding-shell [class*="bg-[#1f2428]"] {
+  background-color: var(--primary) !important;
+}
+
+.onboarding-shell [class*="text-[#1f2428]"] {
+  color: var(--primary) !important;
+}
+
+.onboarding-shell [class*="text-[#4f5f63]"],
+.onboarding-shell [class*="text-[#6f7d72]"],
+.onboarding-shell [class*="text-[#354247]"] {
+  color: var(--on-surface-variant) !important;
+}
+
+.onboarding-shell [class*="text-[#3c6e71]"] {
+  color: var(--secondary) !important;
+}
+
+@media (min-width: 1024px) {
+  .app-shell main {
+    padding: 48px 40px !important;
+  }
 }

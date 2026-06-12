@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Hanken_Grotesk, Newsreader } from "next/font/google";
 import { SessionProvider } from "@/components/auth/session-provider";
+import { AppShell } from "@/components/layout/app-shell";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
 });
 
@@ -27,10 +28,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${hankenGrotesk.variable} ${newsreader.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <AppShell>{children}</AppShell>
+        </SessionProvider>
       </body>
     </html>
   );
