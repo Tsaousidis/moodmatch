@@ -12,6 +12,9 @@ const popularItemsByCategorySlug = {
     ["The Grand Budapest Hotel", 2014],
     ["Mad Max: Fury Road", 2015],
     ["Arrival", 2016],
+    ["Knives Out", 2019],
+    ["Spider-Man: Into the Spider-Verse", 2018],
+    ["The Princess Bride", 1987],
   ],
   "tv-shows": [
     ["The Bear", 2022],

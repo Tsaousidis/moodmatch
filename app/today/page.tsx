@@ -104,6 +104,12 @@ export default async function TodayPage() {
             >
               Profile
             </Link>
+            <Link
+              href="/movie-night"
+              className="inline-flex h-10 items-center rounded-lg border border-[#cfc7b9] bg-white/70 px-4 text-sm font-semibold"
+            >
+              Movie Night
+            </Link>
           </nav>
         </header>
 
