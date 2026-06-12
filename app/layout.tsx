@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Moodmatch",
+  title: "Moodmatch - A living taste profile",
   description:
     "A personalized recommendation app that builds a living Taste DNA from user feedback.",
 };
