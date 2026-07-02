@@ -142,6 +142,11 @@ export function ItemSelector({
                           ? "bg-[#3c6e71] text-white"
                           : "bg-[#1f2428] text-white group-hover:bg-[#3c6e71]"
                       }`}
+                      style={{
+                        color: isSelected
+                          ? "var(--on-secondary-fixed)"
+                          : "var(--on-primary)",
+                      }}
                     >
                       {isSelected ? (
                         <Check className="h-3.5 w-3.5" aria-hidden="true" />
