@@ -8,6 +8,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -92,27 +93,37 @@ export const userCategories = pgTable(
   (table) => [primaryKey({ columns: [table.userId, table.categoryId] })]
 );
 
-export const items = pgTable("items", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  categoryId: uuid("category_id").references(() => categories.id, {
-    onDelete: "set null",
-  }),
-  type: itemTypeEnum("type").notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  subtitle: varchar("subtitle", { length: 255 }),
-  description: text("description"),
-  releaseYear: integer("release_year"),
-  imageUrl: text("image_url"),
-  externalId: varchar("external_id", { length: 255 }),
-  externalSource: varchar("external_source", { length: 80 }),
-  metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-});
+export const items = pgTable(
+  "items",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    categoryId: uuid("category_id").references(() => categories.id, {
+      onDelete: "set null",
+    }),
+    type: itemTypeEnum("type").notNull(),
+    title: varchar("title", { length: 255 }).notNull(),
+    subtitle: varchar("subtitle", { length: 255 }),
+    description: text("description"),
+    releaseYear: integer("release_year"),
+    imageUrl: text("image_url"),
+    externalId: varchar("external_id", { length: 255 }),
+    externalSource: varchar("external_source", { length: 80 }),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("items_seed_identity_idx").on(
+      table.categoryId,
+      table.title,
+      table.externalSource
+    ),
+  ]
+);
 
 export const userFavorites = pgTable(
   "user_favorites",

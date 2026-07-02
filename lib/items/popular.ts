@@ -115,9 +115,11 @@ export async function ensurePopularItemsForCategoryIds(categoryIds: string[]) {
     )
     .orderBy(asc(categories.name), asc(items.title));
 
-  await enrichItems(catalog);
+  const uniqueCatalog = dedupeCatalog(catalog);
 
-  return db
+  await enrichItems(uniqueCatalog);
+
+  const enrichedCatalog = await db
     .select({
       id: items.id,
       title: items.title,
@@ -136,4 +138,18 @@ export async function ensurePopularItemsForCategoryIds(categoryIds: string[]) {
       and(inArray(items.categoryId, categoryIds), eq(items.externalSource, "seed"))
     )
     .orderBy(asc(categories.name), asc(items.title));
+
+  return dedupeCatalog(enrichedCatalog);
+}
+
+function dedupeCatalog<T extends { categoryId: string | null; title: string }>(
+  catalog: T[]
+) {
+  const seen = new Set<string>();
+  return catalog.filter((item) => {
+    const key = `${item.categoryId ?? "uncategorized"}:${item.title.toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }

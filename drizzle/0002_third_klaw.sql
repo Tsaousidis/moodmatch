@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "items_seed_identity_idx" ON "items" USING btree ("category_id","title","external_source");
