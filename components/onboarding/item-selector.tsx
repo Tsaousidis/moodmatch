@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Check, Plus } from "lucide-react";
 
 export type OnboardingItemOption = {
   id: string;
@@ -119,22 +120,35 @@ export function ItemSelector({
                     key={item.id}
                     type="button"
                     onClick={() => toggleItem(item.id)}
-                    className={`min-h-28 rounded-lg border bg-white/80 p-4 text-left shadow-sm transition ${
+                    className={`group flex min-h-32 flex-col justify-between rounded-lg border bg-white/80 p-4 text-left shadow-sm transition ${
                       isSelected
-                        ? "border-[#3c6e71] ring-2 ring-[#3c6e71]/25"
-                        : "border-[#ded6c7] hover:border-[#bfc9c2]"
+                        ? "border-[#3c6e71] bg-[#f4fbf7] ring-2 ring-[#3c6e71]/25"
+                        : "border-[#ded6c7] hover:border-[#bfc9c2] hover:bg-[#fbfaf7]"
                     }`}
                   >
-                    <span className="block text-base font-semibold text-[#1f2428]">
-                      {item.title}
+                    <span>
+                      <span className="block text-base font-semibold leading-snug text-[#1f2428]">
+                        {item.title}
+                      </span>
+                      <span className="mt-3 inline-flex items-center rounded-full border border-[#ded6c7] bg-[#f7f3eb] px-2.5 py-1 text-xs font-semibold capitalize text-[#4f5f63]">
+                        {item.releaseYear
+                          ? `${item.type.replace("_", " ")} · ${item.releaseYear}`
+                          : item.type.replace("_", " ")}
+                      </span>
                     </span>
-                    <span className="mt-2 block text-sm text-[#4f5f63]">
-                      {item.releaseYear
-                        ? `${item.type.replace("_", " ")} - ${item.releaseYear}`
-                        : item.type.replace("_", " ")}
-                    </span>
-                    <span className="mt-4 block text-xs font-semibold uppercase tracking-[0.14em] text-[#6f7d72]">
-                      {isSelected ? "Selected" : "Tap to add"}
+                    <span
+                      className={`mt-5 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                        isSelected
+                          ? "bg-[#3c6e71] text-white"
+                          : "bg-[#1f2428] text-white group-hover:bg-[#3c6e71]"
+                      }`}
+                    >
+                      {isSelected ? (
+                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                      ) : (
+                        <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+                      )}
+                      {isSelected ? "Added" : "Add to taste"}
                     </span>
                   </button>
                 );
