@@ -1,13 +1,17 @@
 # Moodmatch
 
-![Taste DNA Profile](public/test-dna.png)
-
 Moodmatch is a personalized recommendation app for movies, TV shows, books,
 board games, video games, and other taste-driven categories.
 
 The product goal is simple: the more a user rates, saves, rejects, and explores,
 the better the app understands their taste. Moodmatch builds a living Taste DNA
 profile and uses it to recommend one strong Perfect Match plus supporting picks.
+
+## Taste DNA & Features
+
+![Taste DNA Profile](public/test-dna.png)
+
+Moodmatch goes beyond simple ratings by mapping out your aesthetic preferences, emotional leanings, and pacing choices.
 
 ## Tech Stack
 
