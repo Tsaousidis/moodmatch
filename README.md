@@ -1,5 +1,7 @@
 # Moodmatch
 
+![Taste DNA Profile](public/test-dna.png)
+
 Moodmatch is a personalized recommendation app for movies, TV shows, books,
 board games, video games, and other taste-driven categories.
 

@@ -156,81 +156,91 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="discover" className="bg-surface px-6 py-20">
-        <div className="mx-auto grid max-w-[1200px] gap-4 md:grid-cols-12">
-          <article className="relative overflow-hidden rounded-xl bg-primary-container p-8 text-white md:col-span-8 md:min-h-[360px]">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-tertiary-fixed">
-              Precision, not popularity
-            </p>
-            <h2 className="mt-3 font-display text-4xl font-semibold">
-              The Perfect Match
-            </h2>
-            <p className="mt-4 max-w-xl leading-7 text-on-primary-container">
-              The Match Meter is a probability shaped by your evolving Taste
-              DNA, ensuring your evening is never wasted on merely okay content.
-            </p>
-            <div className="mt-12 flex items-center gap-6">
-              <span className="flex h-32 w-32 items-center justify-center rounded-full border-[9px] border-secondary-container font-display text-3xl font-semibold">
-                90%
-              </span>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary-container">
-                  Vibe Match
-                </p>
-                <p className="mt-2 font-display text-2xl">
-                  High melancholy, low pace
-                </p>
-              </div>
+      <section id="discover" className="bg-surface px-6 py-24 border-t border-outline-variant">
+        <div className="mx-auto max-w-[1200px]">
+          
+          {/* Feature 1: Discover */}
+          <div className="grid items-center gap-12 lg:grid-cols-2 mb-32">
+            <div className="order-2 lg:order-1 rounded-2xl border border-outline-variant/30 bg-surface-container-low shadow-2xl overflow-hidden editorial-shadow transform transition-transform hover:scale-[1.01]">
+               <Image
+                 src="/discover.png"
+                 alt="Discover workspace with mood sliders"
+                 width={1200}
+                 height={900}
+                 className="w-full object-cover object-top"
+               />
             </div>
-          </article>
-
-          <article className="rounded-xl border border-outline-variant bg-surface-container-high p-7 md:col-span-4">
-            <MoonStar size={36} className="text-primary" />
-            <h3 className="mt-5 font-display text-2xl font-semibold text-primary">
-              Mood-First Filter
-            </h3>
-            <p className="mt-3 leading-7 text-on-surface-variant">
-              Switch between moods instantly. Your Taste DNA adapts without
-              forgetting what makes a recommendation feel like you.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className="rounded-lg border border-outline-variant bg-surface px-3 py-2">
-                Ethereal
-              </span>
-              <span className="rounded-lg bg-primary px-3 py-2 text-on-primary">
-                Cozy
-              </span>
-              <span className="rounded-lg border border-outline-variant bg-surface px-3 py-2">
-                Suspenseful
-              </span>
-            </div>
-          </article>
-
-          <article className="rounded-xl bg-secondary-fixed p-7 md:col-span-4">
-            <Library size={32} />
-            <h3 className="mt-5 font-display text-2xl font-semibold text-on-secondary-fixed">
-              Editorial Depth
-            </h3>
-            <p className="mt-3 leading-7 text-[#6e3900]">
-              Curated metadata that goes beyond ratings. Discover the why behind
-              every recommendation.
-            </p>
-          </article>
-
-          <article className="flex flex-col gap-6 rounded-xl border border-outline-variant bg-surface-bright p-7 sm:flex-row sm:items-center md:col-span-8">
-            <span className="flex h-28 w-full shrink-0 items-center justify-center rounded-lg bg-primary text-tertiary-fixed sm:w-28">
-              <Sparkles size={38} />
-            </span>
-            <div>
-              <h3 className="font-display text-2xl font-semibold text-primary">
-                Cross-Category Intelligence
-              </h3>
-              <p className="mt-3 leading-7 text-on-surface-variant">
-                Loved a slow-burn sci-fi film? Find the novel and strategy game
-                that share its tempo and emotional tone.
+            <div className="order-1 lg:order-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">
+                Precision, not popularity
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-semibold text-primary sm:text-5xl">
+                The Perfect Match
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-on-surface-variant">
+                The Match Meter is a probability shaped by your evolving Taste
+                DNA. Fine-tune your mood, set your boundaries, and ensure your evening is never wasted on merely okay content.
               </p>
             </div>
-          </article>
+          </div>
+
+          {/* Feature 2: Taste DNA */}
+          <div className="grid items-center gap-12 lg:grid-cols-2 mb-32">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">
+                Your profile, visualized
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-semibold text-primary sm:text-5xl">
+                Taste DNA Analysis
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-on-surface-variant">
+                Visualize your unique preferences. Your Taste DNA adapts with every rating and saved item, without forgetting what makes a recommendation feel like you.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low shadow-2xl overflow-hidden editorial-shadow transform transition-transform hover:scale-[1.01]">
+               <Image
+                 src="/test-dna.png"
+                 alt="Taste DNA radar chart and anchors"
+                 width={1200}
+                 height={900}
+                 className="w-full object-cover object-top"
+               />
+            </div>
+          </div>
+
+          {/* Feature Grid for remaining points */}
+          <div className="grid gap-6 md:grid-cols-3">
+            <article className="rounded-2xl border border-outline-variant bg-surface-container-lowest p-8 editorial-shadow">
+              <MoonStar size={32} className="text-primary" />
+              <h3 className="mt-5 font-display text-2xl font-semibold text-primary">
+                Mood-First Filter
+              </h3>
+              <p className="mt-3 leading-7 text-on-surface-variant">
+                Switch between moods instantly. Find exactly what fits your current headspace.
+              </p>
+            </article>
+
+            <article className="rounded-2xl bg-secondary-fixed p-8 editorial-shadow">
+              <Library size={32} className="text-on-secondary-fixed" />
+              <h3 className="mt-5 font-display text-2xl font-semibold text-on-secondary-fixed">
+                Editorial Depth
+              </h3>
+              <p className="mt-3 leading-7 text-[#6e3900]">
+                Curated metadata that goes beyond ratings. Discover the why behind every recommendation.
+              </p>
+            </article>
+
+            <article className="rounded-2xl border border-outline-variant bg-primary-container p-8 editorial-shadow text-white">
+              <Sparkles size={32} className="text-tertiary-fixed" />
+              <h3 className="mt-5 font-display text-2xl font-semibold">
+                Cross-Category
+              </h3>
+              <p className="mt-3 leading-7 text-on-primary-container">
+                Loved a slow-burn sci-fi film? Find the novel and strategy game with the same tone.
+              </p>
+            </article>
+          </div>
+
         </div>
       </section>
 

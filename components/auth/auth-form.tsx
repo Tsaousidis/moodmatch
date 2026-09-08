@@ -103,7 +103,17 @@ export function AuthForm({ mode }: { mode: AuthFormMode }) {
         </label>
 
         <label className="block">
-          <span className="text-sm font-semibold text-on-surface-variant">Password</span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-on-surface-variant">Password</span>
+            {!isSignup && (
+              <Link
+                href="/auth/forgot-password"
+                className="text-xs font-semibold text-secondary hover:underline"
+              >
+                Forgot password?
+              </Link>
+            )}
+          </div>
           <input
             name="password"
             type="password"
